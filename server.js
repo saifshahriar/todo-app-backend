@@ -16,12 +16,19 @@ app.use("/api/todos", todoRoutes);
 
 // Root route
 app.get("/", (req, res) => {
-  res.json({ message: "Welcome to the Todo API" });
+	res.json({ message: "Welcome to the Todo API" });
 });
 
+// Ping route
+app.get("/ping", (req, res) => {
+	res.json({
+		message: "Successfull ping. App is running.",
+		version: "1.0.0",
+	});
+});
 
 app.listen(PORT, () => {
-  console.log(`Server running on port ${PORT}`);
+	console.log(`Server running on port ${PORT}`);
 });
 
 module.exports = app;
