@@ -1,0 +1,22 @@
+/project-root
+ ├── /models
+ │    ├── todoModel.js
+ │    ├── userModel.js
+ │
+ ├── /controllers
+ │    ├── todoController.js
+ │    ├── authController.js
+ │
+ ├── /routes
+ │    ├── todoRoutes.js
+ │    ├── authRoutes.js
+ │
+ ├── /config
+ │    ├── db.js
+ │
+ ├── /api
+ │    ├── index.js
+ │
+ ├── server.js
+ ├── .env
+ ├── package.json
