@@ -3,6 +3,15 @@ const router = express.Router();
 const db = require("../config/db");
 
 // GET all todos
+/**
+ * @swagger
+ * /api/todos:
+ *   get:
+ *     summary: Get all todos
+ *     responses:
+ *       200:
+ *         description: Returns a list of todos
+ */
 router.get("/", async (req, res, next) => {
 	try {
 		const sql = "SELECT * FROM todos ORDER BY created_at DESC";
@@ -19,6 +28,25 @@ router.get("/", async (req, res, next) => {
 });
 
 //GET single todo
+/**
+ * @swagger
+ * /api/todos/{id}:
+ *   get:
+ *     summary: Get a single todo
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: integer
+ *     responses:
+ *       200:
+ *         description: Returns a single todo by ID
+ *       404:
+ *         description: Todo not found
+ *       500:
+ *         description: Internal server error
+ */
 router.get("/:id", async (req, res, next) => {
 	try {
 		const id = req.params.id;
@@ -38,6 +66,32 @@ router.get("/:id", async (req, res, next) => {
 });
 
 //POST one single todo
+/**
+ * @swagger
+ * /api/todos:
+ *   post:
+ *     summary: Create a new todo
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             required:
+ *               - title
+ *             properties:
+ *               title:
+ *                 type: string
+ *               description:
+ *                 type: string
+ *     responses:
+ *       201:
+ *         description: Todo created successfully
+ *       400:
+ *         description: Title is required
+ *       500:
+ *         description: Internal server error
+ */
 router.post("/", async (req, res, next) => {
 	try {
 		const { title, description } = req.body;
@@ -56,6 +110,25 @@ router.post("/", async (req, res, next) => {
 });
 
 //DELETE one single todo
+/**
+ * @swagger
+ * /api/todos/{id}:
+ *   delete:
+ *     summary: Delete a todo by ID
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: integer
+ *     responses:
+ *       200:
+ *         description: Todo deleted successfully
+ *       404:
+ *         description: Todo not found
+ *       500:
+ *         description: Internal server error
+ */
 router.delete("/:id", async (req, res, next) => {
 	try {
 		const id = req.params.id;
@@ -74,6 +147,44 @@ router.delete("/:id", async (req, res, next) => {
 });
 
 //Update one single todo
+/**
+ * @swagger
+ * /api/todos/{id}:
+ *   put:
+ *     summary: Update a todo by ID
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: integer
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             required:
+ *               - title
+ *               - description
+ *               - is_completed
+ *             properties:
+ *               title:
+ *                 type: string
+ *               description:
+ *                 type: string
+ *               is_completed:
+ *                 type: boolean
+ *     responses:
+ *       200:
+ *         description: Todo updated successfully
+ *       400:
+ *         description: Missing required fields (title, description, or is_completed)
+ *       404:
+ *         description: Todo not found
+ *       500:
+ *         description: Internal server error
+ */
 router.put("/:id", async (req, res, next) => {
 	try {
 		const id = req.params.id;
@@ -106,4 +217,3 @@ router.put("/:id", async (req, res, next) => {
 });
 
 module.exports = router;
-
