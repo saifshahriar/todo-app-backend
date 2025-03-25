@@ -18,16 +18,31 @@ const swaggerOptions = {
 			version: "1.0.0",
 			description: "API Documentation for the Todo App",
 		},
+		servers: [
+			{
+				url: "https://todo-app-backend-nine-jet.vercel.app/",
+				description: "My API Documentation",
+			},
+		],
 	},
 	apis: ["server.js", "./routes/*.js"],
 };
 
 const swaggerDocs = swaggerJsDoc(swaggerOptions);
-app.use("/docs", swaggerUi.serve, swaggerUi.setup(swaggerDocs));
 
 // Middleware
 app.use(express.json());
 app.use(morgan("dev"));
+app.use(
+	"/docs",
+	swaggerUi.serve,
+	swaggerUi.setup(swaggerDocs, {
+		customCss:
+			".swagger-ui .opblock .opblock-summary-path-description-wrapper { align-items: center; display: flex; flex-wrap: wrap; gap: 0 10px; padding: 0 10px; width: 100%; }",
+		customCssUrl:
+			"https://cdnjs.cloudflare.com/ajax/libs/swagger-ui/4.3.0/swagger-ui.min.css",
+	})
+);
 
 // Routes
 app.use("/api/todos", todoRoutes);
